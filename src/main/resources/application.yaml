@@ -1,1 +1,8 @@
-spring.application.name=MajesticCup
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/majestic_cup
+      database: majestic_cup
+      username: postgres
+      password: User_Password
+

@@ -1,4 +1,7 @@
 package org.yassir.MajesticCup.repository;
 
-public interface ICompetitionRepository {
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.yassir.MajesticCup.model.entity.Competition;
+
+public interface ICompetitionRepository extends MongoRepository<Competition,String> {
 }
