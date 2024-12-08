@@ -3,6 +3,12 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/majestic_cup
       database: majestic_cup
-      username: postgres
-      password: User_Password
+#      username: yassir
+#      password: User_Password
+      authentication-database: admin
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
 
