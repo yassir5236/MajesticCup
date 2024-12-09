@@ -2,24 +2,38 @@ package org.yassir.MajesticCup.Controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.yassir.MajesticCup.Service.Impl.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.yassir.MajesticCup.Dto.Team.TeamRequestDTO;
+import org.yassir.MajesticCup.Dto.Team.TeamResponseDTO;
+import org.yassir.MajesticCup.Service.ITeamService;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/admin/teams")
 
 public class AdminController {
 
+    private final ITeamService teamService;
 
-
-    public AdminController() {
+    @Autowired
+    public AdminController(ITeamService teamService) {
+        this.teamService = teamService;
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return "test";
+    @PostMapping("/addTeam")
+    public ResponseEntity<TeamResponseDTO> AddTeam(@RequestBody TeamRequestDTO teamRequestDto) {
+
+        TeamResponseDTO createdTeam = teamService.createTeam(teamRequestDto);
+        return new ResponseEntity<>(createdTeam, HttpStatus.CREATED);
+    }
+
+    @GetMapping("allTeams")
+    public ResponseEntity<List<TeamResponseDTO>> getAllTeams() {
+        List<TeamResponseDTO> teams = teamService.getAllTeams();
+        return ResponseEntity.ok(teams);
     }
 
 }

@@ -1,4 +1,4 @@
 package org.yassir.MajesticCup.Dto.Match;
 
-public record MatchRequestDto() {
+public record MatchRequestDTO() {
 }

@@ -12,4 +12,6 @@ public class Player {
     private String surname;
     private String position;
     private int number;
+    private Team team;
+
 }

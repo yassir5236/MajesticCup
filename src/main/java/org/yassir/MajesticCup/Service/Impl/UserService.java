@@ -45,14 +45,7 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-//    public User updateUserRole(String username, String role) {
-//        User user = userRepository.findByUsername(username)
-//                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable !"));
-//        System.out.println("im here");
-//
-//        user.setRole(role);
-//        return userRepository.save(user);
-//    }
+
 
     public void updatePassword(String username, String oldPassword, String newPassword) {
 
