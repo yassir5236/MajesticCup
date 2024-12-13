@@ -7,9 +7,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Result {
+public class MatchResult {
     private int team1Goals;
     private int team2Goals;
-    private List<Statistics> statistics;
+    private List<PlayerStatistics> statistics;
 }
 

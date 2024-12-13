@@ -13,6 +13,7 @@ import org.yassir.MajesticCup.Service.IPlayerService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -39,61 +40,54 @@ public class PlayerServiceImp implements IPlayerService {
         Team team =teamRepository.findById(playerRequestDTO.teamId()).orElseThrow(()->new RuntimeException("team not found"));
         Player player = playerMapper.toEntity(playerRequestDTO);
 
-//        List <Player> players = new ArrayList<>();
-//        players.add(player);
-//
-//        team.setPlayers(players);
-        player.setTeam(team);
-
+        teamRepository.save(team);
         Player savedPlayer = playerRepository.save(player);
 
         return playerMapper.toResponseDto(savedPlayer);
     }
 
-//
-//    @Override
-//    public PlayerResponseDTO getPlayerById(Long teamId) {
-//        Player team = teamRepository.findById(teamId)
-//                .orElseThrow(() -> new IllegalArgumentException("Player not found with ID: " + teamId));
-//        return teamMapper.toResponseDto(team);
-//    }
-//
-//    @Override
-//    public PlayerResponseDTO updatePlayer(Long id, PlayerRequestDTO teamRequestDTO) {
-//        Player existingPlayer = teamRepository.findById(id)
-//                .orElseThrow(() -> new IllegalArgumentException("Player not found with ID: " + id));
-//
-//
-//        double fieldSomeArea = existingPlayer.getFields().stream().mapToDouble(Field::getArea).sum();
-//
-//        if (fieldSomeArea > teamRequestDTO.totalArea()){
-//            throw new IllegalArgumentException("Total area of team doesn't match");
-//        }
-//
-//        existingPlayer.setName(teamRequestDTO.name());
-//        existingPlayer.setCreated(teamRequestDTO.created());
-//        existingPlayer.setLocation(teamRequestDTO.location());
-//        existingPlayer.setTotalArea(teamRequestDTO.totalArea());
-//        Player updatedPlayer = teamRepository.save(existingPlayer);
-//        return teamMapper.toResponseDto(updatedPlayer);
-//    }
-//
-//    @Override
-//    public List<PlayerResponseDTO> getAllPlayers() {
-//        List<Player> teams = (List<Player>) teamRepository.findAll();
-//        return teams.stream()
-//                .map(teamMapper::toResponseDto)
-//                .collect(Collectors.toList());
-//    }
-//
-//
-//    @Override
-//    public void deletePlayer(Long teamId) {
-//        if (!teamRepository.existsById(teamId)) {
-//            throw new IllegalArgumentException("Player not found with ID: " + teamId);
-//        }
-//        teamRepository.deleteById(teamId);
-//    }
+
+    @Override
+    public PlayerResponseDTO getPlayerById(String playerId) {
+        Player player = playerRepository.findById(playerId)
+                .orElseThrow(() -> new IllegalArgumentException("Player not found with ID: " + playerId));
+        return playerMapper.toResponseDto(player);
+    }
+
+    @Override
+    public PlayerResponseDTO updatePlayer(String id, PlayerRequestDTO playerRequestDTO) {
+        Player existingPlayer = playerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Player not found with ID: " + id));
+
+        Team team = teamRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("team not found with ID: " + id));
+
+
+        existingPlayer.setName(playerRequestDTO.name());
+        existingPlayer.setSurname(playerRequestDTO.surname());
+        existingPlayer.setNumber(playerRequestDTO.number());
+        existingPlayer.setPosition(playerRequestDTO.position());
+
+        Player updatedPlayer = playerRepository.save(existingPlayer);
+        return playerMapper.toResponseDto(updatedPlayer);
+    }
+
+    @Override
+    public List<PlayerResponseDTO> getAllPlayers() {
+        List<Player> players = (List<Player>) playerRepository.findAll();
+        return players.stream()
+                .map(playerMapper::toResponseDto)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public void deletePlayer(String playerId) {
+        if (!playerRepository.existsById(playerId)) {
+            throw new IllegalArgumentException("Player not found with ID: " + playerId);
+        }
+        playerRepository.deleteById(playerId);
+    }
 
 
 

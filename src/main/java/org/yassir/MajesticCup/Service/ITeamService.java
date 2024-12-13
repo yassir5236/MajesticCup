@@ -7,13 +7,11 @@ import java.util.List;
 public interface ITeamService {
     TeamResponseDTO createTeam(TeamRequestDTO teamRequestDTO);
 
-//    TeamResponseDTO getTeamById(Long teamId);
-//
-//    TeamResponseDTO updateTeam(Long id, TeamRequestDTO teamRequestDTO);
-//
+    TeamResponseDTO getTeamById(String teamId);
+    TeamResponseDTO updateTeam(String id, TeamRequestDTO teamRequestDTO);
     List<TeamResponseDTO> getAllTeams();
-//
-//    void deleteTeam(Long teamId);
+
+    void deleteTeam(String teamId);
 
 
 

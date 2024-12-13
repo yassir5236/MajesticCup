@@ -1,6 +1,7 @@
-package org.yassir.MajesticCup.Controller;
+package org.yassir.MajesticCup.Controller.Admin;
 
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +15,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin/teams")
 
-public class AdminController {
+public class TeamController {
 
     private final ITeamService teamService;
 
     @Autowired
-    public AdminController(ITeamService teamService) {
+    public TeamController(ITeamService teamService) {
         this.teamService = teamService;
     }
 
@@ -35,5 +36,29 @@ public class AdminController {
         List<TeamResponseDTO> teams = teamService.getAllTeams();
         return ResponseEntity.ok(teams);
     }
+
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TeamResponseDTO> getTeamById(@PathVariable String id) {
+        TeamResponseDTO team = teamService.getTeamById(id);
+        return ResponseEntity.ok(team);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TeamResponseDTO> updateTeam(
+            @PathVariable String id,
+            @Valid @RequestBody TeamRequestDTO teamRequestDTO) {
+        TeamResponseDTO updatedTeam = teamService.updateTeam(id, teamRequestDTO);
+        return ResponseEntity.ok(updatedTeam);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTeam(@PathVariable String id) {
+        teamService.deleteTeam(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 }

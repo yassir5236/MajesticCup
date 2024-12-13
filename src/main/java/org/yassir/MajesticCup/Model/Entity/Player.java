@@ -1,17 +1,18 @@
 package org.yassir.MajesticCup.Model.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Setter
+@Getter
 public class Player {
     private String id;
     private String name;
     private String surname;
     private String position;
     private int number;
-    private Team team;
 
 }

@@ -33,40 +33,30 @@ public class TeamServiceImp implements ITeamService {
     @Override
     public TeamResponseDTO createTeam(TeamRequestDTO teamRequestDTO) {
         Team team = teamMapper.toEntity(teamRequestDTO);
-        System.out.println(teamRequestDTO);
         Team savedTeam = teamRepository.save(team);
-        System.out.println(savedTeam);
         return teamMapper.toResponseDto(savedTeam);
     }
 
-//
-//    @Override
-//    public TeamResponseDTO getTeamById(Long teamId) {
-//        Team team = teamRepository.findById(teamId)
-//                .orElseThrow(() -> new IllegalArgumentException("Team not found with ID: " + teamId));
-//        return teamMapper.toResponseDto(team);
-//    }
-//
-//    @Override
-//    public TeamResponseDTO updateTeam(Long id, TeamRequestDTO teamRequestDTO) {
-//        Team existingTeam = teamRepository.findById(id)
-//                .orElseThrow(() -> new IllegalArgumentException("Team not found with ID: " + id));
-//
-//
-//        double fieldSomeArea = existingTeam.getFields().stream().mapToDouble(Field::getArea).sum();
-//
-//        if (fieldSomeArea > teamRequestDTO.totalArea()){
-//            throw new IllegalArgumentException("Total area of team doesn't match");
-//        }
-//
-//        existingTeam.setName(teamRequestDTO.name());
-//        existingTeam.setCreated(teamRequestDTO.created());
-//        existingTeam.setLocation(teamRequestDTO.location());
-//        existingTeam.setTotalArea(teamRequestDTO.totalArea());
-//        Team updatedTeam = teamRepository.save(existingTeam);
-//        return teamMapper.toResponseDto(updatedTeam);
-//    }
-//
+
+    @Override
+    public TeamResponseDTO getTeamById(String teamId) {
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new IllegalArgumentException("Team not found with ID: " + teamId));
+        return teamMapper.toResponseDto(team);
+    }
+
+    @Override
+    public TeamResponseDTO updateTeam(String id, TeamRequestDTO teamRequestDTO) {
+        Team existingTeam = teamRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Team not found with ID: " + id));
+
+        existingTeam.setName(teamRequestDTO.name());
+        existingTeam.setCity(teamRequestDTO.city());
+
+        Team updatedTeam = teamRepository.save(existingTeam);
+        return teamMapper.toResponseDto(updatedTeam);
+    }
+
     @Override
     public List<TeamResponseDTO> getAllTeams() {
         List<Team> teams = (List<Team>) teamRepository.findAll();
@@ -74,15 +64,15 @@ public class TeamServiceImp implements ITeamService {
                 .map(teamMapper::toResponseDto)
                 .collect(Collectors.toList());
     }
-//
-//
-//    @Override
-//    public void deleteTeam(Long teamId) {
-//        if (!teamRepository.existsById(teamId)) {
-//            throw new IllegalArgumentException("Team not found with ID: " + teamId);
-//        }
-//        teamRepository.deleteById(teamId);
-//    }
+
+
+    @Override
+    public void deleteTeam(String teamId) {
+        if (!teamRepository.existsById(teamId)) {
+            throw new IllegalArgumentException("Team not found with ID: " + teamId);
+        }
+        teamRepository.deleteById(teamId);
+    }
 
 
 

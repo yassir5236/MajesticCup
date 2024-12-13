@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,7 +17,10 @@ public class Competition {
     private String id;
     private String name;
     private int numberOfTeams;
-    private List<String> teams;
+    private List<Team> teams = new ArrayList<>();
     private int currentRound;
-    private List<String> rounds;
+    private List<Round> rounds;
 }
+
+
+

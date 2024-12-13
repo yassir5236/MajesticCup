@@ -16,7 +16,7 @@ public class Round {
     @Id
     private String id;
     private int roundNumber;
-    private String competitionId;
-    private List<MatchDetails> matches;
+    private Competition competition;
+    private List<Match> matches;
 }
 

@@ -10,11 +10,11 @@ import java.util.List;
 public interface IPlayerService {
     PlayerResponseDTO createPlayer(PlayerRequestDTO playerRequestDTO);
 
-//    PlayerResponseDTO getPlayerById(Long teamId);
-//
-//    PlayerResponseDTO updatePlayer(Long id, PlayerRequestDTO teamRequestDTO);
-//
-//    List<PlayerResponseDTO> getAllPlayers();
-//
-//    void deletePlayer(Long teamId);
+    PlayerResponseDTO getPlayerById(String playerId);
+
+    PlayerResponseDTO updatePlayer(String id, PlayerRequestDTO playerRequestDTO);
+
+    List<PlayerResponseDTO> getAllPlayers();
+
+    void deletePlayer(String playerId);
 }
