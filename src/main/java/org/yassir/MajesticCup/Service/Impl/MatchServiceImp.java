@@ -213,7 +213,7 @@ public class MatchServiceImp implements IMatchService {
         Team team1 =teamRepository.findById(matchRequestDTO.team1())
                 .orElseThrow(()->new RuntimeException("Team not found"));
 
-        Team team2 =teamRepository.findById(matchRequestDTO.team1())
+        Team team2 =teamRepository.findById(matchRequestDTO.team2())
                 .orElseThrow(()->new RuntimeException("Team not found"));
 
         Player winner = playerRepository.findById(matchRequestDTO.winner())
@@ -230,9 +230,15 @@ public class MatchServiceImp implements IMatchService {
 
     public List<MatchResponseDTO> getAllMatches() {
         List<Match> matches = matchRepository.findAll();
+
         return matches.stream()
-                .map(matchMapper::toResponseDTO)
-                .toList();
+                .map(match -> {
+                    Team team1 = match.getTeam1();
+                    Team team2 = match.getTeam2();
+
+                    return matchMapper.toResponseDTO(match);
+                })
+                .collect(Collectors.toList());
     }
 
     public MatchResponseDTO getMatchById(String id) {
